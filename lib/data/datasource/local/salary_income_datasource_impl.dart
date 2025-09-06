@@ -28,23 +28,34 @@ class SalaryIncomeDatasourceImpl implements SalaryIncomeDataSource {
   }
 
   @override
-  Future<void> addSalaryIncome(SalaryIncome salaryIncome) =>
-      _objectBox.salaryIncomeBox.putAsync(
-        SalaryIncomeModel(
-          salaryIncome: salaryIncome.salaryIncome,
-          comment: salaryIncome.comment,
-          date: salaryIncome.date,
-        ),
-      );
-
-  @override
-  Future<void> updateSalaryIncome(SalaryIncome salaryIncome) {
-    // TODO: implement updateSalaryIncome
-    throw UnimplementedError();
+  Future<bool> addSalaryIncome(SalaryIncome salaryIncome) async {
+    final result = await _objectBox.salaryIncomeBox.putAsync(
+      SalaryIncomeModel(
+        salaryIncome: salaryIncome.salaryIncome,
+        comment: salaryIncome.comment,
+        date: salaryIncome.date,
+      ),
+    );
+    return result > 0;
   }
 
   @override
-  Future<void> deleteSalaryIncome(int id) {
-    return _objectBox.salaryIncomeBox.removeAsync(id);
+  Future<bool> updateSalaryIncome(SalaryIncome salaryIncome) async {
+    if (salaryIncome.id == null) {
+      return false;
+    }
+    final result = await _objectBox.salaryIncomeBox.putAsync(
+      SalaryIncomeModel(
+        id: salaryIncome.id!,
+        salaryIncome: salaryIncome.salaryIncome,
+        comment: salaryIncome.comment,
+        date: salaryIncome.date,
+      ),
+    );
+    return result > 0;
   }
+
+  @override
+  Future<bool> deleteSalaryIncome(int id) async =>
+      await _objectBox.salaryIncomeBox.removeAsync(id);
 }

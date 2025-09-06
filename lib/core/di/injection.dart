@@ -1,4 +1,5 @@
 // service locator
+import 'package:deshadai/ui/bloc/add_salary_cubit.dart';
 import 'package:deshadai/ui/bloc/home_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -16,6 +17,9 @@ Future<void> init() async {
     // Register the SalaryIncomeDataSource
     ..registerFactory<SalaryIncomeDataSource>(
       () => SalaryIncomeDatasourceImpl(getit<ObjectBox>()),
+    )
+    ..registerFactory<AddSalaryCubit>(
+      () => AddSalaryCubit(getit<SalaryIncomeDataSource>()),
     )
     ..registerFactory<HomeCubit>(
       () => HomeCubit(getit<SalaryIncomeDataSource>()),

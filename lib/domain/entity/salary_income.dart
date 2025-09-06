@@ -5,7 +5,7 @@ part 'salary_income.freezed.dart';
 @freezed
 abstract class SalaryIncome with _$SalaryIncome {
   factory SalaryIncome({
-    required int id,
+    int? id,
     required double salaryIncome,
     String? comment,
     required DateTime date,

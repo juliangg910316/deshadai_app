@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SalaryIncome {
 
- int get id; double get salaryIncome; String? get comment; DateTime get date;
+ int? get id; double get salaryIncome; String? get comment; DateTime get date;
 /// Create a copy of SalaryIncome
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -45,7 +45,7 @@ abstract mixin class $SalaryIncomeCopyWith<$Res>  {
   factory $SalaryIncomeCopyWith(SalaryIncome value, $Res Function(SalaryIncome) _then) = _$SalaryIncomeCopyWithImpl;
 @useResult
 $Res call({
- int id, double salaryIncome, String? comment, DateTime date
+ int? id, double salaryIncome, String? comment, DateTime date
 });
 
 
@@ -62,10 +62,10 @@ class _$SalaryIncomeCopyWithImpl<$Res>
 
 /// Create a copy of SalaryIncome
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? salaryIncome = null,Object? comment = freezed,Object? date = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = freezed,Object? salaryIncome = null,Object? comment = freezed,Object? date = null,}) {
   return _then(_self.copyWith(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,salaryIncome: null == salaryIncome ? _self.salaryIncome : salaryIncome // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,salaryIncome: null == salaryIncome ? _self.salaryIncome : salaryIncome // ignore: cast_nullable_to_non_nullable
 as double,comment: freezed == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
 as String?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,
@@ -153,7 +153,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  double salaryIncome,  String? comment,  DateTime date)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  double salaryIncome,  String? comment,  DateTime date)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SalaryIncome() when $default != null:
 return $default(_that.id,_that.salaryIncome,_that.comment,_that.date);case _:
@@ -174,7 +174,7 @@ return $default(_that.id,_that.salaryIncome,_that.comment,_that.date);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  double salaryIncome,  String? comment,  DateTime date)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  double salaryIncome,  String? comment,  DateTime date)  $default,) {final _that = this;
 switch (_that) {
 case _SalaryIncome():
 return $default(_that.id,_that.salaryIncome,_that.comment,_that.date);case _:
@@ -194,7 +194,7 @@ return $default(_that.id,_that.salaryIncome,_that.comment,_that.date);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  double salaryIncome,  String? comment,  DateTime date)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  double salaryIncome,  String? comment,  DateTime date)?  $default,) {final _that = this;
 switch (_that) {
 case _SalaryIncome() when $default != null:
 return $default(_that.id,_that.salaryIncome,_that.comment,_that.date);case _:
@@ -209,10 +209,10 @@ return $default(_that.id,_that.salaryIncome,_that.comment,_that.date);case _:
 
 
 class _SalaryIncome implements SalaryIncome {
-   _SalaryIncome({required this.id, required this.salaryIncome, this.comment, required this.date});
+   _SalaryIncome({this.id, required this.salaryIncome, this.comment, required this.date});
   
 
-@override final  int id;
+@override final  int? id;
 @override final  double salaryIncome;
 @override final  String? comment;
 @override final  DateTime date;
@@ -247,7 +247,7 @@ abstract mixin class _$SalaryIncomeCopyWith<$Res> implements $SalaryIncomeCopyWi
   factory _$SalaryIncomeCopyWith(_SalaryIncome value, $Res Function(_SalaryIncome) _then) = __$SalaryIncomeCopyWithImpl;
 @override @useResult
 $Res call({
- int id, double salaryIncome, String? comment, DateTime date
+ int? id, double salaryIncome, String? comment, DateTime date
 });
 
 
@@ -264,10 +264,10 @@ class __$SalaryIncomeCopyWithImpl<$Res>
 
 /// Create a copy of SalaryIncome
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? salaryIncome = null,Object? comment = freezed,Object? date = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = freezed,Object? salaryIncome = null,Object? comment = freezed,Object? date = null,}) {
   return _then(_SalaryIncome(
-id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
-as int,salaryIncome: null == salaryIncome ? _self.salaryIncome : salaryIncome // ignore: cast_nullable_to_non_nullable
+id: freezed == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int?,salaryIncome: null == salaryIncome ? _self.salaryIncome : salaryIncome // ignore: cast_nullable_to_non_nullable
 as double,comment: freezed == comment ? _self.comment : comment // ignore: cast_nullable_to_non_nullable
 as String?,date: null == date ? _self.date : date // ignore: cast_nullable_to_non_nullable
 as DateTime,
