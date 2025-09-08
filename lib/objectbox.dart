@@ -11,10 +11,6 @@ class ObjectBox {
 
   ObjectBox._create(Store store) {
     _salaryIncomeBox = Box<SalaryIncomeModel>(store);
-
-    if (_salaryIncomeBox.isEmpty()) {
-      _putDemoData();
-    }
   }
 
   static Future<ObjectBox> create() async {
@@ -26,26 +22,5 @@ class ObjectBox {
       macosApplicationGroup: "objectbox.deshadai",
     );
     return ObjectBox._create(store);
-  }
-
-  void _putDemoData() {
-    final demoNotes = [
-      SalaryIncomeModel(
-        salaryIncome: 100,
-        comment: 'First salary',
-        date: DateTime(2025, 8, 21),
-      ),
-      SalaryIncomeModel(
-        salaryIncome: 150,
-        comment: 'Second salary',
-        date: DateTime(2025, 8, 22),
-      ),
-      SalaryIncomeModel(
-        salaryIncome: 200,
-        comment: 'Third salary',
-        date: DateTime.now(),
-      ),
-    ];
-    _salaryIncomeBox.putManyAsync(demoNotes);
   }
 }

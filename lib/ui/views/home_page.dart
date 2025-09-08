@@ -1,4 +1,5 @@
 import 'package:deshadai/core/di/injection.dart';
+import 'package:deshadai/core/extension/text_style.dart';
 import 'package:deshadai/ui/bloc/add_salary_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,9 +18,10 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             const ChartsPage(),
-            Text('Últimos dias trabajados'),
+            Text('Últimos dias trabalhados').bold(),
             SalaryListView(),
           ],
         ),

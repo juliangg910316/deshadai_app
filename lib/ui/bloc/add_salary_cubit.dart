@@ -1,9 +1,8 @@
-import 'package:deshadai/core/input/salary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:logger/logger.dart';
 
+import '../../core/input/salary.dart';
 import '../../domain/datasources/salary_income_datasource.dart';
 import '../../domain/entity/salary_income.dart';
 
@@ -21,40 +20,27 @@ class AddSalaryCubit extends Cubit<AddSalaryState> {
       );
 
   void salaryIncomeChanged(String value) {
-    Logger().d('salaryIncomeChanged: $value');
-    // final formatter = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
-    final amount = switch (value.length) {
-      0 => '0.00',
-      1 => '0.0${value.substring(0, 1)}',
-      2 => '0.${value.substring(0, 2)}',
-      _ =>
-        '${value.substring(0, value.length - 2)}.${value.substring(value.length - 2, value.length)}',
-    };
-    // final v = formatter.format(double.parse(amount));
-    Logger().d('formatted value: $amount');
-    final salary = Salary.dirty(amount);
+    final salary = Salary.dirty(value);
     emit(
       state.copyWith(
         salaryIncome: salary,
-        controller: state.controller?..text = amount,
+        controller: state.controller?..text = value,
         isValid: salary.isValid && state.date != null,
       ),
     );
   }
 
-  void dateChanged(DateTime? value) {
-    emit(
-      state.copyWith(
-        date: value,
-        isValid: value != null && state.salaryIncome.isValid,
-      ),
-    );
-  }
+  void dateChanged(DateTime? value) => emit(
+    state.copyWith(
+      date: value,
+      isValid: value != null && state.salaryIncome.isValid,
+    ),
+  );
 
   void submit() async {
     emit(state.copyWith(isLoading: true, isError: false, isSuccess: false));
     final salaryIncome = SalaryIncome(
-      salaryIncome: double.parse(state.salaryIncome.value),
+      salaryIncome: double.parse(state.salaryIncome.cleanValue),
       comment: '',
       date: state.date!,
     );

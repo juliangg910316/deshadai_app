@@ -10,10 +10,10 @@ part 'home_state.dart';
 class HomeCubit extends Cubit<HomeState> {
   final SalaryIncomeDataSource _salaryIncomeDataSource;
   HomeCubit(this._salaryIncomeDataSource) : super(const HomeState()) {
-    _loadSalaryIncomes();
+    loadSalaryIncomes();
   }
 
-  Future<void> _loadSalaryIncomes() async {
+  Future<void> loadSalaryIncomes() async {
     emit(state.copyWith(status: HomeStatus.loading));
 
     try {

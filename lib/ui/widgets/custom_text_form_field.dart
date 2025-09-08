@@ -17,6 +17,8 @@ class CustomTextFormField extends StatelessWidget {
   final int lines;
   final IconData? icon;
   final bool readOnly;
+  final bool autofocus;
+  final FocusNode? focusNode;
 
   const CustomTextFormField({
     super.key,
@@ -35,6 +37,8 @@ class CustomTextFormField extends StatelessWidget {
     this.onTap,
     this.icon,
     this.readOnly = false,
+    this.autofocus = false,
+    this.focusNode,
   });
 
   @override
@@ -73,6 +77,8 @@ class CustomTextFormField extends StatelessWidget {
         onFieldSubmitted: onFieldSubmitted,
         textInputAction: TextInputAction.done,
         onTap: onTap,
+        autofocus: autofocus,
+        focusNode: focusNode,
         obscureText: obscureText,
         keyboardType: keyboardType,
         style: const TextStyle(fontSize: 20, color: Colors.black54),

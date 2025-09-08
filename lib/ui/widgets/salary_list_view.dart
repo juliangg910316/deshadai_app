@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/util/amount_formatter.dart';
 import '../../domain/entity/salary_income.dart';
 import '../bloc/home_cubit.dart';
 
@@ -14,15 +15,23 @@ class SalaryListView extends StatelessWidget {
     switch (state.status) {
       case HomeStatus.initial:
       case HomeStatus.loading:
-        return const Center(child: CircularProgressIndicator());
+        return SizedBox(
+          child: const Center(child: CircularProgressIndicator()),
+        );
       case HomeStatus.error:
-        return Center(child: Text(state.errorMessage));
+        return SizedBox(
+          height: 300,
+          child: Center(child: Text(state.errorMessage)),
+        );
       case HomeStatus.success:
-        if (state.salaryIncomes.isEmpty) {
-          return const Center(child: Text('No salary incomes found.'));
-        } else {
-          return _buildSalaryList(state.salaryIncomes);
-        }
+        return state.salaryIncomes.isEmpty
+            ? SizedBox(
+                height: 300,
+                child: const Center(
+                  child: Text('Não tem rendimentos salariais.'),
+                ),
+              )
+            : _buildSalaryList(state.salaryIncomes);
     }
   }
 
@@ -33,7 +42,9 @@ class SalaryListView extends StatelessWidget {
       itemBuilder: (context, index) {
         final salaryIncome = salaryIncomes[index];
         return ListTile(
-          title: Text('\$${salaryIncome.salaryIncome}'),
+          title: Text(
+            '\$${formatterCurrency.format(salaryIncome.salaryIncome)}',
+          ),
           // subtitle: Text('Día ${salaryIncome.date.day}'),
           trailing: Text(DateFormat('dd MMM').format(salaryIncome.date)),
           // leading: const Icon(Icons.monetization_on),

@@ -23,7 +23,7 @@ class Salary extends FormzInput<String, SalaryError> {
   }
 
   String get cleanValue {
-    return value.replaceAll(RegExp(r'[^\d]'), '');
+    return value.trim().replaceAll(',', '.');
   }
 
   // Override validator to handle validating a given Salary value.

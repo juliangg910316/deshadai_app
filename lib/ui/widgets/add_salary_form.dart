@@ -1,6 +1,7 @@
 import 'package:deshadai/core/extension/padding.dart';
 import 'package:deshadai/core/extension/text_style.dart';
 import 'package:deshadai/ui/bloc/add_salary_cubit.dart';
+import 'package:deshadai/ui/bloc/home_cubit.dart';
 import 'package:deshadai/ui/widgets/custom_button.dart';
 import 'package:deshadai/ui/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,8 @@ class AddSalaryForm extends StatelessWidget {
               return CustomTextFormField(
                 label: 'Valor',
                 controller: state.controller,
+                // focusNode: FocusNode(),
+                // autofocus: true,
                 keyboardType: TextInputType.number,
                 icon: Icons.attach_money,
                 inputFormatters: [
@@ -74,15 +77,33 @@ class AddSalaryForm extends StatelessWidget {
         ],
       ).withPaddingSymmetric(vertical: 16),
       actions: [
-        CustomButton(
-          onSubmit: () => Navigator.of(context).pop(),
-          minWidth: 100,
-          child: const Text('Cancelar').color(Colors.white),
-        ),
-        CustomButton(
-          onSubmit: () => Navigator.of(context).pop(),
-          minWidth: 100,
-          child: const Text('Salvar').color(Colors.white),
+        BlocConsumer<AddSalaryCubit, AddSalaryState>(
+          listenWhen: (previous, current) =>
+              previous.isSuccess != current.isSuccess ||
+              previous.isError != current.isError,
+          listener: (context, state) {
+            if (state.isSuccess) {
+              Navigator.of(context).pop();
+              context.read<HomeCubit>().loadSalaryIncomes();
+            } else if (state.isError) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(state.errorMessage ?? 'Erro ao salvar'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            return CustomButton(
+              disableButton: !state.isValid,
+              onSubmit: context.read<AddSalaryCubit>().submit,
+              minWidth: 100,
+              child: state.isLoading
+                  ? CircularProgressIndicator(color: Colors.white)
+                  : Text('Salvar').color(Colors.white),
+            );
+          },
         ),
       ],
     );

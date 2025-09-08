@@ -8,7 +8,6 @@ class CustomButton extends StatelessWidget {
     this.disableButton = false,
     this.minWidth,
   });
-
   final VoidCallback onSubmit;
   final Widget child;
   final bool disableButton;

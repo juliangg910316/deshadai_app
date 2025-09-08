@@ -17,7 +17,19 @@ void main() async {
 
   Bloc.observer = const BlocObserved();
 
-  runApp(const MyApp());
+  runApp(const BlocsProviders());
+}
+
+class BlocsProviders extends StatelessWidget {
+  const BlocsProviders({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => di.getit<HomeCubit>())],
+      child: const MyApp(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -27,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "D'Shadai",
+      title: "D'Shaddai",
       debugShowCheckedModeBanner: false,
       locale: const Locale('pt', 'BR'),
       supportedLocales: const [Locale('pt', 'BR')],
@@ -40,10 +52,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: BlocProvider(
-        create: (context) => di.getit<HomeCubit>(),
-        child: const HomePage(),
-      ),
+      home: const HomePage(),
     );
   }
 }
