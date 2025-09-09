@@ -1,17 +1,32 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/util/data_chart_build.dart';
+import '../../domain/entity/salary_income.dart';
+import 'chart_titles.dart';
+
 class ChartView extends StatelessWidget {
-  const ChartView({super.key});
+  const ChartView({super.key, required this.salaries});
+
+  final List<SalaryIncome> salaries;
 
   @override
   Widget build(BuildContext context) {
+    final yValues = DataChartBuild.generateYValuesLastWeek(salaries);
     return BarChart(
       BarChartData(
         barTouchData: barTouchData,
         titlesData: titlesData,
         borderData: borderData,
-        barGroups: barGroups,
+        barGroups: yValues.asMap().entries.map((entry) {
+          int index = entry.key;
+          double value = entry.value;
+          return BarChartGroupData(
+            x: index,
+            barRods: [BarChartRodData(toY: value, gradient: _barsGradient)],
+            showingTooltipIndicators: [0],
+          );
+        }).toList(),
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
         maxY: 400,
@@ -40,53 +55,13 @@ class ChartView extends StatelessWidget {
     ),
   );
 
-  Widget getTitles(double value, TitleMeta meta) {
-    final style = TextStyle(
-      color: Colors.blue.shade700,
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-    String text;
-    switch (value.toInt()) {
-      case 0:
-        text = 'S';
-        break;
-      case 1:
-        text = 'T';
-        break;
-      case 2:
-        text = 'Q';
-        break;
-      case 3:
-        text = 'Q';
-        break;
-      case 4:
-        text = 'S';
-        break;
-      case 5:
-        text = 'S';
-        break;
-      case 6:
-        text = 'D';
-        break;
-      default:
-        text = '';
-        break;
-    }
-    return SideTitleWidget(
-      meta: meta,
-      space: 4,
-      child: Text(text, style: style),
-    );
-  }
-
   FlTitlesData get titlesData => FlTitlesData(
     show: true,
     bottomTitles: AxisTitles(
       sideTitles: SideTitles(
         showTitles: true,
         reservedSize: 30,
-        getTitlesWidget: getTitles,
+        getTitlesWidget: (value, meta) => ChartTitles(value: value, meta: meta),
       ),
     ),
     leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -102,41 +77,41 @@ class ChartView extends StatelessWidget {
     end: Alignment.topCenter,
   );
 
-  List<BarChartGroupData> get barGroups => [
-    BarChartGroupData(
-      x: 0,
-      barRods: [BarChartRodData(toY: 208, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 1,
-      barRods: [BarChartRodData(toY: 310, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 2,
-      barRods: [BarChartRodData(toY: 114, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 3,
-      barRods: [BarChartRodData(toY: 215, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 4,
-      barRods: [BarChartRodData(toY: 213, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 5,
-      barRods: [BarChartRodData(toY: 310, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 6,
-      barRods: [BarChartRodData(toY: 116, gradient: _barsGradient)],
-      showingTooltipIndicators: [0],
-    ),
-  ];
+  // List<BarChartGroupData> get barGroups => [
+  //   BarChartGroupData(
+  //     x: 0,
+  //     barRods: [BarChartRodData(toY: 208, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 1,
+  //     barRods: [BarChartRodData(toY: 310, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 2,
+  //     barRods: [BarChartRodData(toY: 114, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 3,
+  //     barRods: [BarChartRodData(toY: 215, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 4,
+  //     barRods: [BarChartRodData(toY: 213, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 5,
+  //     barRods: [BarChartRodData(toY: 310, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 6,
+  //     barRods: [BarChartRodData(toY: 116, gradient: _barsGradient)],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  // ];
 }

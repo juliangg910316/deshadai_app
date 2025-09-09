@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('D\'Shadai')),
+      appBar: AppBar(title: const Text('D\'Shaddai')),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
